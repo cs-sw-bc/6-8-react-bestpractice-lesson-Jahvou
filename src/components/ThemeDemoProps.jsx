@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import { useState, createContext, useContext } from 'react'
+
+// 2. create themeContect here
+const ThemeContext = createContext(null);
 
 export default function ThemeDemoProps() {
   const [theme, setTheme] = useState('light')
   const [page, setPage] = useState('form')
 
   return (
+    <ThemeContext value={{theme}}>
     <div className={'app-' + theme}>
 
       <nav className={'nav-' + theme}>
@@ -19,6 +23,7 @@ export default function ThemeDemoProps() {
       {page === 'about' && <AboutPage theme={theme} />}
 
     </div>
+    </ThemeContext>
   )
 }
 
@@ -43,7 +48,8 @@ function AboutPage({ theme }) {
   )
 }
 
-function Panel({ title, children, theme }) {
+function Panel({ title, children }) {
+  const {theme} = useContext(ThemeContext)
   return (
     <section className={'panel-' + theme}>
       <h1>{title}</h1>
@@ -52,7 +58,9 @@ function Panel({ title, children, theme }) {
   )
 }
 
-function Button({ children, theme }) {
+function Button({ children }) {
+
+  const {theme} = useContext(ThemeContext)
   return (
     <button className={'button-' + theme}>
       {children}

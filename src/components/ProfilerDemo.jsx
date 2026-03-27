@@ -37,7 +37,7 @@ function MovieTable({ sortKey, onSort }) {
   // Profiler will show this component as slow when sorting
   const movies = useMemo(() => {
     if (!sortKey) return initialMovies
-    sleep(3000)
+    //sleep(3000)
     return [...initialMovies].sort((a, b) => {
       if (typeof a[sortKey] === 'string') return a[sortKey].localeCompare(b[sortKey])
       return b[sortKey] - a[sortKey]

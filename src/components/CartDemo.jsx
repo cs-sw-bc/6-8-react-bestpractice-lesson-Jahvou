@@ -1,9 +1,8 @@
 // 1. Import createContext and useContext (useState is already imported)
-import { useState } from 'react'
+import { useState, createContext, useContext } from 'react'
 
 // 2. Create CartContext here
-// const CartContext = ...
-
+const CartContext = createContext(null);
 const movies = [
   { id: 1, title: 'Inception', price: 12.99 },
   { id: 2, title: 'Interstellar', price: 11.99 },
@@ -26,16 +25,17 @@ export default function CartDemo() {
   return (
     // 6. Wrap the div below with CartContext and pass cart, addItem, removeItem, calculateTax as the value
     <div className="app-light">
+      <CartContext value={{cart, addItem, removeItem, calculateTax}}>
       <MovieList />
       <CartSummary />
+      </CartContext>
     </div>
   )
 }
 
 function MovieList() {
   // 7. Read cart and addItem from CartContext using useContext
-  const cart = []           // replace this line
-  const addItem = () => {}  // replace this line
+  const {cart, addItem} = useContext(CartContext);          // replace this line
 
   return (
     <div className="panel-light">
@@ -58,9 +58,7 @@ function MovieList() {
 
 function CartSummary() {
   // 8. Read cart, removeItem, and calculateTax from CartContext using useContext
-  const cart = []              // replace this line
-  const removeItem = () => {}  // replace this line
-  const calculateTax = () => 0 // replace this line
+  const {cart, removeItem, calculateTax} = useContext(CartContext); 
 
   const subtotal = cart.reduce((sum, item) => sum + item.price, 0)
 
